@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Late-Night Happy Hour Case</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one reading column of numbered beats; each beat = claim + one chart. */
+:root{
+  --bg:#f4f5f7; --surface:#ffffff; --ink:#17202e; --muted:#5d6676; --line:#d8dce3;
+  --accent:#c98a12; --denim:#2f5d8a;
+  --good:#2e7d4f; --warn:#c98a12; --bad:#b2453b;
+  --accent-soft:#f6e7c8; --good-soft:#dcefe3; --bad-soft:#f5dedb;
+  --display:"Bitter",Georgia,"Times New Roman",serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --surface:#1a2029; --ink:#e8ebf0; --muted:#9aa3b2; --line:#2e3542;
+  --accent:#e6a93a; --denim:#7fa9d6; --good:#5cc08a; --warn:#e6a93a; --bad:#e07a70;
+  --accent-soft:#3a2f1a; --good-soft:#18342a; --bad-soft:#3b2220; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --surface:#1a2029; --ink:#e8ebf0; --muted:#9aa3b2; --line:#2e3542;
+  --accent:#e6a93a; --denim:#7fa9d6; --good:#5cc08a; --warn:#e6a93a; --bad:#e07a70;
+  --accent-soft:#3a2f1a; --good-soft:#18342a; --bad-soft:#3b2220; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:800}
+h2{font-size:clamp(1.4rem,3.2vw,1.9rem);font-weight:700}
+h3{font-size:1.05rem;font-weight:700}
+p{margin:0;max-width:65ch}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.beat{display:flex;flex-direction:column;gap:16px}
+.beat .num{font-family:var(--mono);color:var(--accent);font-weight:700;font-size:.85rem;letter-spacing:.08em}
+.lede{font-size:1.15rem;color:var(--muted)}
+.hero{display:flex;flex-direction:column;gap:20px;border-bottom:1px solid var(--line);padding-bottom:40px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tile .big{font-family:var(--mono);font-size:2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.tile .lbl{font-size:.88rem;color:var(--muted)}
+.c-acc{color:var(--accent)} .c-good{color:var(--good)} .c-bad{color:var(--bad)} .c-denim{color:var(--denim)}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;min-width:520px}
+.chart.narrow svg{min-width:300px}
+.cap{font-size:.85rem;color:var(--muted)}
+.formula{font-family:var(--mono);background:var(--surface);border:1px dashed var(--line);border-radius:6px;padding:14px 16px;font-size:.95rem;overflow-x:auto}
+.formula b{color:var(--accent)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.two>*{min-width:0}
+.callout{background:var(--accent-soft);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.recs{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:r}
+.recs li{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px 14px 52px;position:relative;counter-increment:r}
+.recs li::before{content:counter(r);position:absolute;left:16px;top:13px;font-family:var(--mono);font-weight:700;color:var(--accent);font-size:1.1rem}
+.recs b{font-family:var(--display)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.n{font-family:var(--mono);text-align:right;white-space:nowrap} th.n{text-align:right}
+td:first-child{min-width:150px}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.pill{display:inline-block;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.p-good{background:var(--good-soft);color:var(--good)} .p-warn{background:var(--accent-soft);color:var(--warn)} .p-bad{background:var(--bad-soft);color:var(--bad)}
+.score td{font-size:.9rem}
+.score .pill{white-space:normal}
+.foot{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:20px;display:flex;flex-direction:column;gap:6px}
+svg text{fill:var(--ink);font-family:var(--body);font-size:13px}
+svg .mut{fill:var(--muted)} svg .mono{font-family:var(--mono)} svg .b{font-weight:700}
+svg .grid{stroke:var(--line);stroke-width:1}
+</style>
+<style>.sitenav{font-family:"Public Sans",system-ui,sans-serif;font-size:.85rem;display:flex;gap:16px;flex-wrap:wrap}.sitenav a{color:var(--accent);font-weight:600}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<nav class="sitenav"><a href="price-tool.html">Open the price tool →</a></nav>
+
+<header class="hero">
+  <div class="eyebrow">Dolly's · Late-night happy hour · Wed &amp; Thu 10 PM – 1 AM · Team review, Oct 28 2026</div>
+  <h1>Late-night happy hour: when it pays, and when it doesn't</h1>
+  <p class="lede">Andy's proposal cuts five items by 20–50% from 10 PM on Wednesdays and Thursdays. Costs come from the Dolly's beverage app and sales from the POS. This is the business case: what each price needs to sell to stay as profitable as today, how much guests switching from full-price drinks can cost, and the numbers that tell us to keep it or drop it after a trial.</p>
+  <div class="tiles">
+    <div class="tile"><span class="big c-acc">22</span><span class="lbl">happy hour items a night to break even (we sell about 13 now)</span></div>
+    <div class="tile"><span class="big c-good">+9</span><span class="lbl">extra items a night cover the discount if nobody switches</span></div>
+    <div class="tile"><span class="big c-bad">+6</span><span class="lbl">more items needed for every 10% of full-price drinks that switch</span></div>
+    <div class="tile"><span class="big c-denim">+9</span><span class="lbl">more items needed for every $50 of added labour or promotion</span></div>
+  </div>
+</header>
+
+<section class="beat">
+  <span class="num">01 · LAST WEEK IN THE POS</span>
+  <h2>What actually rang last Wednesday and Thursday</h2>
+  <p>Auphan shows the late-night happy hour didn't run as proposed. Wednesday Oct 21 had no late-night discounts at all. Thursday Oct 22 had only the cocktail rule, at $10 instead of $8. The Blonde, wine and pizza stayed at full price both nights.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Item</th><th class="n">Proposed</th><th class="n">Wed Oct 21, after 10 PM</th><th class="n">Thu Oct 22, after 10 PM</th></tr></thead>
+    <tbody>
+      <tr><td>Dolly's Blonde 16 oz</td><td class="n">$8</td><td class="n">12 at $10</td><td class="n">21 at $10</td></tr>
+      <tr><td>Margarita</td><td class="n">$8</td><td class="n">none sold</td><td class="n"><b>16 at $10</b></td></tr>
+      <tr><td>Espresso Martini</td><td class="n">$8</td><td class="n">none sold</td><td class="n"><b>2 at $10</b></td></tr>
+      <tr><td>House wine 5 oz</td><td class="n">$8</td><td class="n">1 x 9 oz at $19</td><td class="n">2 at $12, 1 x 9 oz at $19</td></tr>
+      <tr><td>Select pizza</td><td class="n">$11.50</td><td class="n">none sold</td><td class="n">none sold</td></tr>
+    </tbody>
+  </table></div>
+  <div class="two">
+    <div class="chart narrow"><svg id="margs" viewBox="0 0 400 240" role="img" aria-label="Margaritas sold after 10 PM per night"></svg></div>
+    <div class="chart narrow"><svg id="thu" viewBox="0 0 400 240" role="img" aria-label="Late-night drink profit on Thursdays"></svg></div>
+  </div>
+  <div class="two">
+    <div class="callout">
+      <h3>The cocktails cleared their bar</h3>
+      <p>18 cocktails at $10 between 10:07 PM and 1:06 AM, against about 4 on a normal Thursday. At $10 they need about 1.9× to break even (about 7); they did 4.6×. We gave away $108 in discount and the 18 drinks made $118 profit, against about $49 from 4 full-price cocktails.</p>
+    </div>
+    <div class="callout">
+      <h3>The night can't be credited to it yet</h3>
+      <p>Thursday made $2,848 in late-night drink profit on 393 drinks, against a typical Thursday of $1,212 on 171. Full-price drinks didn't fall (360). But Thu Oct 15, with no happy hour, made $2,786 on 352 drinks, so recent Thursdays are busy anyway.</p>
+    </div>
+  </div>
+  <p class="cap">Auphan POS mirror (data through Oct 26), items entered 10 PM onward, Toronto time. Drink profit = net sales minus beverage-app cost. Wednesday Oct 21 late sales were $2,024 against a typical Wednesday of $938, with no happy hour running. The 5–8 PM happy hour rang normally both nights.</p>
+</section>
+
+<section class="beat">
+  <span class="num">02 · THE MECHANICS</span>
+  <h2>Every dollar off comes out of profit</h2>
+  <p>Product cost stays the same when the price drops, so the whole discount comes off the profit on that drink. To stand still we need enough extra drinks to make it back.</p>
+  <div class="formula">Sales needed = profit per item at regular price <b>÷</b> profit per item at happy hour price</div>
+  <div class="chart"><svg id="split" viewBox="0 0 640 330" role="img" aria-label="Profit per item at regular and happy hour prices"></svg></div>
+  <p class="cap">Our drinks run 78–84% margin, which is why the cuts are affordable at all. The Blonde keeps $6.05 of its $8.05 profit at $8. The Margarita keeps only $4.41 of $12.41 at $8.</p>
+</section>
+
+<section class="beat">
+  <span class="num">03 · THRESHOLD BY ITEM</span>
+  <h2>How many times today's sales each price needs</h2>
+  <p>A bar at 2× means we must sell double what we sell late on a Wed/Thu today just to make the same profit. Anything above that is gain.</p>
+  <div class="chart"><svg id="items" viewBox="0 0 680 350" role="img" aria-label="Break-even sales multiple per happy hour item"></svg></div>
+  <p class="cap">Green under 1.5× is easy, amber up to 2.2× is workable, red needs a real crowd. Pizza has no recipe cost in the Dolly's food cost app yet, so it uses the app's 32% target ($7.23 on a $22.60 pizza); at Andy's $2.25 it would need 2.2×.</p>
+</section>
+
+<section class="beat">
+  <span class="num">04 · IN DRINKS, NOT MULTIPLES</span>
+  <h2>Big multiples, small numbers</h2>
+  <p>Late on a Wed or Thu we sell about 9 Blondes, 2 Margaritas, 1 Espresso Martini, less than half a glass of house wine and almost no whole pizza (late food is mostly $5–6 slices). So even the red items only need a few extra a night.</p>
+  <div class="chart"><svg id="dumb" viewBox="0 0 680 350" role="img" aria-label="Items sold per night now versus needed to break even"></svg></div>
+  <p class="cap">Grey = sold per night now (average of 19 Wed/Thu nights, Aug 19 – Oct 21, Auphan POS). Amber = needed per night to make the same profit at the happy hour price.</p>
+</section>
+
+<section class="beat">
+  <span class="num">05 · THE PRICE LADDER</span>
+  <h2>Each dollar off costs more than the last</h2>
+  <p>Extra items needed per night as the price steps down. The bars grow faster at each step, which is why the last dollar off is the one to question.</p>
+  <div class="two">
+    <div class="chart narrow"><svg id="ladderB" viewBox="0 0 360 260" role="img" aria-label="Dolly's Blonde price ladder"></svg></div>
+    <div class="chart narrow"><svg id="ladderM" viewBox="0 0 360 260" role="img" aria-label="Margarita price ladder"></svg></div>
+  </div>
+</section>
+
+<section class="beat">
+  <span class="num">06 · THE MAIN RISK</span>
+  <h2>Guests switching from full-price drinks</h2>
+  <p>The discount on the few happy hour items we already sell late only gives away about $46 a night. The bigger cost is a guest who would have paid full price and orders the cheap drink instead.</p>
+  <div class="chart"><svg id="swap" viewBox="0 0 680 310" role="img" aria-label="Profit lost per swap"></svg></div>
+  <p class="cap">From 2,956 other drinks sold after 10 PM over 19 nights, costed in the beverage app: about 70 beers a night make $5.83 each (32% cost) and about 83 shots and highballs make $8.38 each (18% cost). A beer drinker moving to an $8 Blonde costs us nothing. A shot drinker moving to an $8 Margarita costs $3.97. Labels show the new happy hour drinks needed to cover one swap.</p>
+</section>
+
+<section class="beat">
+  <span class="num">07 · THE BREAK-EVEN MAP</span>
+  <h2>Where the line crosses zero</h2>
+  <p>Profit change per night against extra happy hour items sold, for different shares of full-price drinks switching. The strategy pays once we're past the dot on our line.</p>
+  <div class="chart"><svg id="map" viewBox="0 0 680 380" role="img" aria-label="Net profit per night by extra happy hour items and switching rate"></svg></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Share of full-price drinks that switch</th><th class="n">Extra HH items / night to break even</th><th class="n">Total HH items / night</th></tr></thead>
+    <tbody id="maptable"></tbody>
+  </table></div>
+  <p class="cap">Assumes an even mix of the four drinks (average $5.31 profit each at Andy's prices) and about 156 other drinks after 10 PM averaging $7.28 profit. Add about 9 items for every $50 a night of added bar labour, DJ or promotion.</p>
+</section>
+
+<section class="beat">
+  <span class="num">08 · ONE NIGHT, ILLUSTRATED</span>
+  <h2>What a good night could look like</h2>
+  <p>These volumes are guesses to show the shape, not a forecast: 20 Blondes, 15 Margaritas, 8 Espresso Martinis, 4 wines and 6 pizzas, with 10% of other drinks switching.</p>
+  <div class="chart"><svg id="water" viewBox="0 0 680 300" role="img" aria-label="Profit change waterfall for one illustrative night"></svg></div>
+  <p class="cap">About +$129 a night is about $1,030 a period (8 nights) or $13,400 a year, before bar labour, DJ and promotion. Pizza at the 32% target cost.</p>
+</section>
+
+
+
+<section class="beat">
+  <span class="num">09 · KEEP OR DROP</span>
+  <h2>Trial scorecard</h2>
+  <p>Run it 4–6 weeks. Average the Wed/Thu nights, and compare event nights with event nights. These are the lines that decide it.</p>
+  <div class="tablewrap"><table class="score">
+    <thead><tr><th>Measure (per Wed/Thu night, 10 PM – close)</th><th class="n">Today</th><th>Keep it</th><th>Watch</th><th>Drop or reprice</th></tr></thead>
+    <tbody>
+      <tr><td>Happy hour items sold (all five)</td><td class="n">13</td><td><span class="pill p-good">30+</span></td><td><span class="pill p-warn">22–30</span></td><td><span class="pill p-bad">under 22</span></td></tr>
+      <tr><td>Full-price drinks sold</td><td class="n">156</td><td><span class="pill p-good">156+</span></td><td><span class="pill p-warn">140–156</span></td><td><span class="pill p-bad">under 140, with HH items under 28</span></td></tr>
+      <tr><td>Late-night profit after product cost, against like nights before the trial</td><td class="n">~$1,250</td><td><span class="pill p-good">up more than added costs</span></td><td><span class="pill p-warn">flat</span></td><td><span class="pill p-bad">down</span></td></tr>
+      <tr><td>Margaritas and Espresso Martinis at $10</td><td class="n">3</td><td><span class="pill p-good">8+</span></td><td><span class="pill p-warn">6–8</span></td><td><span class="pill p-bad">under 6</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="cap">22 items is break-even with no switching. A 10% drop in full-price drinks (to about 140) adds about 6 items, so 28. Profit row = drink sales minus beverage-app cost, today about $1,250 a night across all drinks. These use Andy's $8 cocktails; with cocktails at $10 the break-even drops to about 20 items. The last row is the $10 cocktail break-even (5.3 a night) with some margin. Last Thursday did 18.</p>
+</section>
+
+<section class="beat">
+  <span class="num">10 · RECOMMENDATION</span>
+  <h2>What we're proposing</h2>
+  <ol class="recs">
+    <li><b>Program the full happy hour in Auphan for both nights.</b> Last week Wednesday rang nothing and Thursday rang only the cocktails. We can't judge the trial until the Blonde, wine and pizza prices ring on both nights.</li>
+    <li><b>Dolly's Blonde at $8.</b> It needs a third more pints, about 3 a night, and it's already the best late seller. A guest switching from another beer costs us nothing.</li>
+    <li><b>Keep cocktails at $10, as they rang last Thursday.</b> The Margarita's break-even drops from 2.8× to 1.9× and the Espresso Martini's from 2.35× to 1.76×; a shot drinker switching costs half as much. If $8 is the headline, keep it to Wed/Thu only and hold it to the scorecard.</li>
+    <li><b>House wine at $8 is fine.</b> It needs 1.8×, but we only sell about half a glass late now, so it's less than one extra glass a night.</li>
+    <li><b>Cost the pizzas in the food cost app.</b> None of the 7 pizzas has a recipe cost yet. At the 32% target ($7.23) the $11.50 pizza needs 3.6×; at Andy's $2.25 it needs 2.2×. It also competes with the $5–6 slices that make up most late food.</li>
+    <li><b>Count added costs in the decision.</b> If the window needs an extra bartender, DJ or paid promotion, every $50 a night raises the target by about 9 items.</li>
+  </ol>
+</section>
+
+<section class="beat">
+  <span class="num">REFERENCE</span>
+  <h2>The numbers behind the charts</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Item</th><th class="n">Regular</th><th class="n">HH</th><th class="n">Cost</th><th class="n">Profit reg → HH</th><th class="n">Multiple</th><th class="n">Now / night</th><th class="n">Extra / night</th><th></th></tr></thead>
+    <tbody id="reftable"></tbody>
+  </table></div>
+</section>
+
+<footer class="foot">
+  <span>Sources: Auphan POS mirror (Dolly's), Wed/Thu nights Aug 19 – Oct 22 2026, items entered 10 PM onward. Prices are pre-tax as rung. Drink costs from the live Dolly's beverage app, Oct 28 (Blonde 16 oz $1.95, Margarita $3.59, Espresso Martini $2.08, house white 5 oz $3.15), matched to every late-night drink sold by POS product. 99% of late-night drink sales matched a costed recipe. Pizza: the Dolly's food cost app has no pizza recipes costed yet, so the 32% target is used. Prices are the menu prices; about 12% of late Blondes were comped at $0.</span>
+  <span>Profit here is pre-tax price minus product cost. Card fees (~2.5%) push every threshold up slightly. The full model with editable inputs is in DY_Late_Night_Happy_Hour_Model_2026-10-28.xlsx.</span>
+</footer>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+function el(svg,tag,a,txt){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e}
+const V=n=>`var(--${n})`;
+const fmtx=v=>v.toFixed(2)+'×';
+const col=m=>m<=1.5?V('good'):m<=2.2?V('warn'):V('bad');
+const money=v=>'$'+(Math.abs(v%1)>0.001?v.toFixed(2):v);
+
+/* 01 split bars */
+(function(){
+  const s=document.getElementById('split');
+  const rows=[
+    {g:"Dolly's Blonde 16 oz",lab:'Regular $10',price:10,cost:1.95},
+    {lab:'HH $8',price:8,cost:1.95},
+    {g:'Margarita',lab:'Regular $16',price:16,cost:3.59},
+    {lab:'HH $10',price:10,cost:3.59},
+    {lab:'HH $8',price:8,cost:3.59},
+  ];
+  const L=130,W=380,sc=W/16;let y=12;
+  rows.forEach((r,i)=>{
+    if(r.g){y+=r.g&&i?16:0;el(s,'text',{x:0,y:y+10,class:'b'},r.g);y+=20}
+    el(s,'text',{x:0,y:y+16,class:'mut mono'},r.lab);
+    el(s,'rect',{x:L,y,width:r.cost*sc,height:24,fill:V('line')});
+    el(s,'rect',{x:L+r.cost*sc,y,width:(r.price-r.cost)*sc,height:24,fill:i<3?V('accent'):V('denim')});
+    el(s,'text',{x:L+r.price*sc+8,y:y+17,class:'mono b'},money(+(r.price-r.cost).toFixed(2))+' profit');
+    y+=34;
+  });
+  y+=6;
+  el(s,'rect',{x:L,y,width:12,height:12,fill:V('line')});el(s,'text',{x:L+18,y:y+10,class:'mut'},'Product cost (stays the same)');
+  el(s,'rect',{x:L+220,y,width:12,height:12,fill:V('accent')});el(s,'text',{x:L+238,y:y+10,class:'mut'},'Profit (takes the whole discount)');
+})();
+
+/* items */
+const items=[
+  {n:"Blonde 16 oz at $8",reg:10,hh:8,c:1.95,now:9.37,a:1},
+  {n:"Margarita at $8",reg:16,hh:8,c:3.59,now:1.84,a:1},
+  {n:"Margarita at $10",reg:16,hh:10,c:3.59,now:1.84,a:0},
+  {n:"Espresso Martini at $8",reg:16,hh:8,c:2.08,now:1.0,a:1},
+  {n:"House wine 5 oz at $8",reg:12,hh:8,c:3.15,now:0.42,a:1},
+  {n:"Pizza at $11.50 (32% target cost)",reg:22.6,hh:11.5,c:7.23,now:0.26,a:1},
+  {n:"Pizza at $11.50 (Andy's $2.25)",reg:22.6,hh:11.5,c:2.25,now:0.26,a:0},
+];
+items.forEach(o=>{o.pr=o.reg-o.c;o.ph=o.hh-o.c;o.m=o.pr/o.ph;o.need=o.now*o.m;o.extra=o.need-o.now});
+
+/* 02 multiples */
+(function(){
+  const s=document.getElementById('items');const L=250,W=360,t=10,rh=36,max=4,X=v=>L+v/max*W;
+  for(let v=0;v<=4;v+=.5){el(s,'line',{x1:X(v),x2:X(v),y1:t,y2:t+rh*items.length,class:'grid'});el(s,'text',{x:X(v),y:t+rh*items.length+18,'text-anchor':'middle',class:'mut mono'},v+'×')}
+  items.forEach((o,i)=>{
+    const y=t+i*rh+6;
+    el(s,'text',{x:L-10,y:y+17,'text-anchor':'end',class:o.a?'b':'mut'},o.n);
+    el(s,'rect',{x:L,y,width:X(o.m)-L,height:22,fill:col(o.m),opacity:o.a?1:.55});
+    el(s,'text',{x:X(o.m)+8,y:y+16,class:'mono b'},fmtx(o.m));
+  });
+  el(s,'line',{x1:X(1),x2:X(1),y1:t,y2:t+rh*items.length,stroke:V('ink'),'stroke-width':1.5});
+  el(s,'text',{x:L,y:t+rh*items.length+38,class:'mut'},"Bold = Andy's proposal. Faded = alternatives.");
+})();
+
+/* 03 dumbbell */
+(function(){
+  const s=document.getElementById('dumb');const L=230,W=380,t=10,rh=38,max=20,X=v=>L+v/max*W;
+  const rows=items.filter(o=>!o.n.includes('Andy'));
+  for(let v=0;v<=20;v+=5){el(s,'line',{x1:X(v),x2:X(v),y1:t,y2:t+rh*rows.length,class:'grid'});el(s,'text',{x:X(v),y:t+rh*rows.length+18,'text-anchor':'middle',class:'mut mono'},v)}
+  el(s,'text',{x:L+W/2,y:t+rh*rows.length+38,'text-anchor':'middle',class:'mut'},'Items sold per night, 10 PM – 1 AM');
+  rows.forEach((o,i)=>{
+    const y=t+i*rh+rh/2;
+    el(s,'text',{x:L-10,y:y+5,'text-anchor':'end',class:o.a?'b':'mut'},o.n);
+    el(s,'line',{x1:X(o.now),x2:X(o.need),y1:y,y2:y,stroke:V('accent'),'stroke-width':3,opacity:.5});
+    el(s,'circle',{cx:X(o.now),cy:y,r:6,fill:V('muted')});
+    el(s,'circle',{cx:X(o.need),cy:y,r:7,fill:V('accent')});
+    el(s,'text',{x:X(o.need)+12,y:y+5,class:'mono b'},'+'+o.extra.toFixed(1));
+  });
+})();
+
+/* 04 ladders */
+function ladder(id,title,reg,c,now,prices){
+  const s=document.getElementById(id);const l=40,b=50,t=40,W=360,H=260,max=10;
+  const data=prices.map(p=>{const m=(reg-c)/(p-c);return{p,m,e:now*(m-1)}});
+  el(s,'text',{x:0,y:16,class:'b'},title);
+  el(s,'text',{x:0,y:32,class:'mut'},'Extra per night · regular $'+reg);
+  const bw=(W-l-10)/data.length, Y=v=>H-b-v/max*(H-t-b);
+  [0,5,10].forEach(v=>{el(s,'line',{x1:l,x2:W,y1:Y(v),y2:Y(v),class:'grid'});el(s,'text',{x:l-6,y:Y(v)+4,'text-anchor':'end',class:'mut mono'},v)});
+  data.forEach((d,i)=>{
+    const x=l+i*bw+bw*.18,w=bw*.64;
+    el(s,'rect',{x,y:Y(d.e),width:w,height:Y(0)-Y(d.e),fill:col(d.m)});
+    el(s,'text',{x:x+w/2,y:Y(d.e)-6,'text-anchor':'middle',class:'mono b'},'+'+d.e.toFixed(1));
+    el(s,'text',{x:x+w/2,y:H-b+18,'text-anchor':'middle',class:'mono'},'$'+d.p);
+    el(s,'text',{x:x+w/2,y:H-b+34,'text-anchor':'middle',class:'mut mono'},fmtx(d.m));
+  });
+}
+ladder('ladderB',"Dolly's Blonde 16 oz",10,1.95,9.37,[9,8,7]);
+ladder('ladderM','Margarita',16,3.59,1.84,[14,12,10,8]);
+
+/* 05 swaps */
+const AVG=7.28;
+(function(){
+  const s=document.getElementById('swap');const L=260,W=330,t=10,rh=48,max=10.5,X=v=>L+v/max*W;
+  const sw=[
+    {n:'Other beer → Blonde $8',lost:5.83-6.05,hh:6.05},
+    {n:'$10 Blonde → $8 Blonde',lost:8.05-6.05,hh:6.05},
+    {n:'Shot or highball → Margarita $10',lost:8.38-6.41,hh:6.41},
+    {n:'Shot or highball → Margarita $8',lost:8.38-4.41,hh:4.41},
+    {n:'$16 Margarita → $8 Margarita',lost:12.41-4.41,hh:4.41},
+  ];
+  sw.forEach((o,i)=>{
+    const y=t+i*rh+8,k=o.lost/o.hh;
+    el(s,'text',{x:L-10,y:y+17,'text-anchor':'end',class:'b'},o.n);
+    if(o.lost<=0){el(s,'rect',{x:L,y,width:4,height:24,fill:V('good')});
+      el(s,'text',{x:L+12,y:y+12,class:'mono b',style:`fill:${V('good')}`},'+$'+(-o.lost).toFixed(2)+' gain');
+      el(s,'text',{x:L+12,y:y+27,class:'mut'},'no loss: the $8 Blonde earns more');return}
+    el(s,'rect',{x:L,y,width:X(o.lost)-L,height:24,fill:k>1?V('bad'):k>.6?V('warn'):V('good')});
+    el(s,'text',{x:X(o.lost)+8,y:y+12,class:'mono b'},'−$'+o.lost.toFixed(2));
+    el(s,'text',{x:X(o.lost)+8,y:y+27,class:'mut'},'= '+k.toFixed(1)+' new HH drinks');
+  });
+})();
+
+/* 06 break-even map */
+const OTHER=155.6;
+const scen={
+  b8:{give:46.3,unit:(6.05+4.41+5.92+4.85)/4},
+};
+const be=(sc,sw)=>(sc.give+OTHER*sw*(AVG-sc.unit))/sc.unit;
+(function(){
+  const s=document.getElementById('map');const l=60,r=120,t=16,b=50,W=680,H=380;
+  const xmax=40,ylo=-150,yhi=200;
+  const X=v=>l+v/xmax*(W-l-r),Y=v=>t+(yhi-v)/(yhi-ylo)*(H-t-b);
+  for(let v=ylo;v<=yhi;v+=50){el(s,'line',{x1:l,x2:W-r,y1:Y(v),y2:Y(v),class:'grid'});el(s,'text',{x:l-8,y:Y(v)+4,'text-anchor':'end',class:'mut mono'},(v<0?'−$':v>0?'+$':'$')+Math.abs(v))}
+  for(let v=0;v<=xmax;v+=10)el(s,'text',{x:X(v),y:H-b+20,'text-anchor':'middle',class:'mut mono'},'+'+v);
+  el(s,'text',{x:(l+W-r)/2,y:H-8,'text-anchor':'middle',class:'mut'},'Extra happy hour items sold per night (above the ~13 we sell now)');
+  el(s,'rect',{x:l,y:Y(0),width:W-r-l,height:Y(ylo)-Y(0),fill:V('bad-soft'),opacity:.6});
+  el(s,'line',{x1:l,x2:W-r,y1:Y(0),y2:Y(0),stroke:V('ink'),'stroke-width':1.5});
+  el(s,'text',{x:l+8,y:Y(ylo)-10,class:'b',style:`fill:${V('bad')}`},'Loses money vs today');
+  el(s,'text',{x:l+8,y:Y(yhi)+16,class:'b',style:`fill:${V('good')}`},'Makes money vs today');
+  const sc=scen.b8;
+  [{sw:0,c:'good'},{sw:.05,c:'accent'},{sw:.10,c:'denim'},{sw:.20,c:'bad'}].forEach(o=>{
+    const f=x=>x*sc.unit-sc.give-OTHER*o.sw*(AVG-sc.unit);
+    const x0=0,x1=xmax;
+    el(s,'line',{x1:X(x0),y1:Y(Math.max(ylo,f(x0))),x2:X(x1),y2:Y(f(x1)),stroke:V(o.c),'stroke-width':3});
+    const bx=be(sc,o.sw);
+    el(s,'circle',{cx:X(bx),cy:Y(0),r:6,fill:V(o.c),stroke:V('surface'),'stroke-width':2});
+    el(s,'text',{x:W-r+8,y:Y(f(x1))+4,class:'b',style:`fill:${V(o.c)}`},(o.sw*100)+'% switch');
+  });
+  el(s,'text',{x:X(be(sc,0))-4,y:Y(0)-12,'text-anchor':'end',class:'mono b',style:`fill:${V('good')}`},'+'+be(sc,0).toFixed(0));
+  el(s,'text',{x:X(be(sc,.2)),y:Y(0)-12,'text-anchor':'middle',class:'mono b',style:`fill:${V('bad')}`},'+'+be(sc,.2).toFixed(0));
+  const tb=document.getElementById('maptable');
+  [0,.05,.10,.20].forEach(sw=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${sw?Math.round(sw*100)+'% (about '+Math.round(OTHER*sw)+' drinks)':'None'}</td><td class="n">+${be(scen.b8,sw).toFixed(0)}</td><td class="n">${(12.9+be(scen.b8,sw)).toFixed(0)}</td>`;
+    tb.appendChild(tr);
+  });
+})();
+
+/* 07 waterfall */
+(function(){
+  const s=document.getElementById('water');const l=60,t=20,b=56,W=680,H=300,lo=-100,hi=300;
+  const Y=v=>t+(hi-v)/(hi-lo)*(H-t-b);
+  [-100,0,100,200,300].forEach(v=>{el(s,'line',{x1:l,x2:W,y1:Y(v),y2:Y(v),class:'grid'});el(s,'text',{x:l-8,y:Y(v)+4,'text-anchor':'end',class:'mut mono'},(v<0?'−$':'$')+Math.abs(v))});
+  el(s,'line',{x1:l,x2:W,y1:Y(0),y2:Y(0),stroke:V('ink')});
+  const steps=[{n:'Discount on items',n2:'we sell anyway',v:-46},{n:'Profit from',n2:'extra HH items',v:206},{n:'Guests switching',n2:'from full price',v:-31},{n:'Net change',n2:'per night',v:129,tot:1}];
+  const bw=(W-l)/steps.length;let run=0;
+  steps.forEach((st,i)=>{
+    const x=l+i*bw+bw*.2,w=bw*.6;let y0,y1;
+    if(st.tot){y0=0;y1=st.v}else{y0=run;y1=run+st.v;run=y1}
+    const top=Math.max(y0,y1),bot=Math.min(y0,y1);
+    el(s,'rect',{x,y:Y(top),width:w,height:Y(bot)-Y(top),fill:st.tot?V('accent'):st.v<0?V('bad'):V('good')});
+    el(s,'text',{x:x+w/2,y:Y(top)-6,'text-anchor':'middle',class:'mono b'},(st.v<0?'−$':'+$')+Math.abs(st.v));
+    el(s,'text',{x:x+w/2,y:H-b+20,'text-anchor':'middle'},st.n);
+    el(s,'text',{x:x+w/2,y:H-b+36,'text-anchor':'middle',class:'mut'},st.n2);
+  });
+})();
+
+/* 08 trial nights */
+const nights=[["08-19",651,0],["08-20",2750,3],["08-26",1197,3],["08-27",1594,3],["09-02",938,1],["09-03",1907,8],["09-09",1202,5],["09-10",1966,10],["09-16",685,0],["09-17",1270,2],["09-23",2938,0],["09-24",6532,0],["09-30",634,0],["10-01",1001,0],["10-07",476,0],["10-08",691,0],["10-14",962,0],["10-15",3706,0],["10-21",2024,0],["10-22",3688,16]];
+function cols(id,title,idx,max,ticks,fmt){
+  const s=document.getElementById(id);const l=44,t=36,b=34,W=400,H=240;
+  const Y=v=>H-b-v/max*(H-t-b),bw=(W-l)/nights.length;
+  el(s,'text',{x:0,y:16,class:'b'},title);
+  ticks.forEach(v=>{el(s,'line',{x1:l,x2:W,y1:Y(v),y2:Y(v),class:'grid'});el(s,'text',{x:l-6,y:Y(v)+4,'text-anchor':'end',class:'mut mono',style:'font-size:11px'},fmt(v))});
+  nights.forEach((n,i)=>{
+    const v=n[idx],x=l+i*bw+bw*.15,w=bw*.7;
+    const c=n[0]==='10-22'?V('accent'):n[0]==='10-15'?V('denim'):V('line');
+    el(s,'rect',{x,y:Y(v),width:w,height:Math.max(0,Y(0)-Y(v)),fill:c});
+    if(n[0]==='10-22'||(n[0]==='10-15'&&idx===2)) el(s,'text',{x:x+w/2,y:Y(v)-5,'text-anchor':'middle',class:'mono b',style:'font-size:11px'},fmt(v));
+  });
+  [[0,'Aug 19'],[nights.length-1,'Oct 22']].forEach(([i,lab])=>el(s,'text',{x:l+i*bw+bw/2,y:H-b+18,'text-anchor':i?'end':'start',class:'mut',style:'font-size:11px'},lab));
+}
+cols('margs','Margaritas after 10 PM',2,18,[0,5,10,15],v=>v);
+(function(){
+  const thu=[["08-20",2052],["08-27",1038],["09-03",1361],["09-10",1212],["09-17",930],["09-24",4320],["10-01",729],["10-08",463],["10-15",2786],["10-22",2848]];
+  const s=document.getElementById('thu');const l=44,t=36,b=34,W=400,H=240,max=4500;
+  const Y=v=>H-b-v/max*(H-t-b),bw=(W-l)/thu.length;
+  el(s,'text',{x:0,y:16,class:'b'},'Late-night drink profit, Thursdays');
+  [0,1000,2000,3000,4000].forEach(v=>{el(s,'line',{x1:l,x2:W,y1:Y(v),y2:Y(v),class:'grid'});el(s,'text',{x:l-6,y:Y(v)+4,'text-anchor':'end',class:'mut mono',style:'font-size:11px'},'$'+(v/1000)+'k')});
+  thu.forEach((n,i)=>{const x=l+i*bw+bw*.15,w=bw*.7;const c=n[0]==='10-22'?V('accent'):n[0]==='10-15'?V('denim'):V('line');
+    el(s,'rect',{x,y:Y(n[1]),width:w,height:Y(0)-Y(n[1]),fill:c});
+    if(n[0]==='10-22'||n[0]==='10-15'||n[0]==='09-24')el(s,'text',{x:x+w/2,y:Y(n[1])-5,'text-anchor':'middle',class:'mono b',style:'font-size:11px'},'$'+(n[1]/1000).toFixed(1)+'k')});
+  [[0,'Aug 20'],[thu.length-1,'Oct 22']].forEach(([i,lab])=>el(s,'text',{x:l+i*bw+bw/2,y:H-b+18,'text-anchor':i?'end':'start',class:'mut',style:'font-size:11px'},lab));
+})();
+
+/* reference table */
+(function(){
+  const tb=document.getElementById('reftable');
+  items.forEach(o=>{
+    const tr=document.createElement('tr');
+    const cls=o.m<=1.5?'p-good':o.m<=2.2?'p-warn':'p-bad', lab=o.m<=1.5?'Easy':o.m<=2.2?'Workable':'Needs a crowd';
+    tr.innerHTML=`<td>${o.n}</td><td class="n">$${o.reg.toFixed(2)}</td><td class="n">$${o.hh.toFixed(2)}</td><td class="n">$${o.c.toFixed(2)}</td><td class="n">$${o.pr.toFixed(2)} → $${o.ph.toFixed(2)}</td><td class="n">${fmtx(o.m)}</td><td class="n">${o.now.toFixed(1)}</td><td class="n">+${o.extra.toFixed(1)}</td><td><span class="pill ${cls}">${lab}</span></td>`;
+    tb.appendChild(tr);
+  });
+})();
+</script>
+
+</body>
+</html>
